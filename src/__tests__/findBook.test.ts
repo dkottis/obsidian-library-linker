@@ -58,6 +58,12 @@ describe('findBook', () => {
     expect(findBook('römer', 'X')).toEqual(expect.objectContaining({ id: 45 }));
   });
 
+  test('ignores punctuation characters', () => {
+    expect(findBook('ps/', 'E')).toEqual(expect.objectContaining({ id: 19 }));
+    expect(findBook('ps\\', 'E')).toEqual(expect.objectContaining({ id: 19 }));
+    expect(findBook('ps.', 'E')).toEqual(expect.objectContaining({ id: 19 }));
+  });
+
   test('throws error for unknown books', () => {
     expect(() => findBook('nonexistent', 'X')).toThrow('errors.bookNotFound');
     expect(() => findBook('', 'X')).toThrow('errors.bookNotFound');
